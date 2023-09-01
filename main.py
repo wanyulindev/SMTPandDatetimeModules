@@ -26,22 +26,60 @@
 #                         )
 
 
-# 20% done - Working with the datetime Module:
+# # 20% done - Working with the datetime Module:
+# import datetime as dt
+#
+# now = dt.datetime.now()
+# year = now.year
+# month = now.month
+# day_of_week = now.weekday()
+# # print(now)
+# # print(year)
+# # print(type(now))
+# # print(day_of_week)
+#
+# # when harver over, it says hour=..., it means it was set to have a default:
+# date_of_birth = dt.datetime(year=1989, month=1, day=26)
+# print(date_of_birth)
+# # Output: 1989-01-26 00:00:00, which means 00:00:00 is default number
+
+
+
+# 30% done - Send Motivational Quotes on Mondays via Email:
 import datetime as dt
+import random
+import smtplib
+
+MY_EMAIL = "wanyudevtest@gmail.com"
+PASSWORD = "btbgsmumwrcsdivg"
+RECEIVER = "wanyudevtest@yahoo.com"
 
 now = dt.datetime.now()
-year = now.year
-month = now.month
 day_of_week = now.weekday()
-# print(now)
-# print(year)
-# print(type(now))
-# print(day_of_week)
 
-# when harver over, it says hour=..., it means it was set to have a default:
-date_of_birth = dt.datetime(year=1989, month=1, day=26)
-print(date_of_birth)
-# Output: 1989-01-26 00:00:00, which means 00:00:00 is default number
+if day_of_week == 3:    # we are test it now on Thursday
+    with open("quotes.txt", "r") as file:
+        lines = file.readlines()
+        body_text = random.choice(lines)
+    # print(type(lines))
+    # print(lines)
+    # print(body_text)
+
+    with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+        connection.starttls()
+        connection.login(user=MY_EMAIL, password=PASSWORD)
+        connection.sendmail(from_addr=MY_EMAIL,
+                            to_addrs=RECEIVER,
+                            msg=f"Subject:Happy Monday, let's rock n roll!\n\n"
+                                f"Hi Winnie,\n\n{body_text}\n"
+                                f"May You Have a great week :)\n\n"
+                                f"Wan-Yu"
+                            )
+
+
+
+
+
 
 
 
