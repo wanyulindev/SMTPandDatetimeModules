@@ -77,7 +77,7 @@
 #                             )
 
 
-# 40% done - Automated Birthday Wisher Project
+# 50% done - Automated Birthday Wisher Project
 
 import datetime as dt
 import random
@@ -110,12 +110,30 @@ for data in data:
         # print(data)
         receiver = data["email"]
         name = data["name"]
+        # print(name)
         # print(data["year"], data["month"], data["day"])
 
         random_file = random.choice(TXT_FILES)
         file_path = os.path.join(FOLDER_PATH, random_file)
-        with open(file_path, "r") as file:
+        with open(file_path) as file:
             template = file.read()
+            body_txt = template.replace("[NAME]", name)
+            # print(body_txt)
+        with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+            connection.starttls()
+            connection.login(user=MY_EMAIL, password=PASSWORD)
+            connection.sendmail(from_addr=MY_EMAIL,
+                                to_addrs=receiver,
+                                msg=f"Subject:Happy Birthday, {name}!\n\n{body_txt}"
+                                )
+
+
+
+            # template = str(file.read())
+            # print(type(template))
+            # body_txt = template.replace("[Name]", name)
+            # # print(template)
+            # print(body_txt)
 
 
             # print(file)
@@ -125,7 +143,7 @@ for data in data:
             # template = file.readlines()
 
             # print(type(template))
-            print(template)
+
 
             # template_to_body_txt = "".join(template)
             #
