@@ -95,34 +95,56 @@ now = dt.datetime.now()
 year = now.year
 month = now.month
 day = now.day
+# print(day)
 
 file = pandas.read_csv("birthdays.csv")
 # print(file)
 # print(file.to_dict(orient="records"))
-data = file.to_dict()
+data = file.to_dict(orient="records")
 # print(data)
 # print(data["year"])
-for _ in data:
-    if data["year"] == year and data["month"] and data["day"]:
+
+for data in data:
+    # print(data)
+    if data["year"] == year and data["month"] == month and data["day"] == day:
+        # print(data)
         receiver = data["email"]
         name = data["name"]
+        # print(data["year"], data["month"], data["day"])
 
         random_file = random.choice(TXT_FILES)
         file_path = os.path.join(FOLDER_PATH, random_file)
         with open(file_path, "r") as file:
-            template = file.readlines()
-
-            # print(template)
-            # Not sure why it's not printing out yet.
+            template = file.read()
 
 
+            # print(file)
+            # anything = file.read()
+            # print(anything)
+
+            # template = file.readlines()
+
+            # print(type(template))
+            print(template)
+
+            # template_to_body_txt = "".join(template)
+            #
+            # # print(template_to_body_txt)
+            # # print(type(template_to_body_txt))
+            #
+            # body_txt = template_to_body_txt.replace("[Name]", "Winnie")
+            #
+            # # print(type(body_txt))
+            #
+            # print(body_txt)
 
         # with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
         #     connection.starttls()
         #     connection.login(user=MY_EMAIL, password=PASSWORD)
         #     connection.sendmail(from_addr=MY_EMAIL,
         #                         to_addrs=receiver,
-        #                         msg=f"Subject:Happy Birthday, {name}!\n\n)
+        #                         msg=f"Subject:Happy Birthday, {name}!\n\n{body_txt}"
+        #                         )
 
 
 
